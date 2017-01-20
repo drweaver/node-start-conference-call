@@ -4,7 +4,8 @@
   "description": "A Node application to fire up the nearest conference call in the calendar",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,6 @@
   "dependencies" : { 
     "pubnub" : "^4.3.3"
   , "jsonfile": "^2.4.0"
+  , "opn": "^4.0.2"
   }
 }
