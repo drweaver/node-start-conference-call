@@ -1,0 +1,32 @@
+{
+  "name": "node-start-conference-call",
+  "version": "1.0.0",
+  "description": "A Node application to fire up the nearest conference call in the calendar",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drweaver/node-start-conference-call.git"
+  },
+  "keywords": [
+    "outlook",
+    "pubnub",
+    "alexa",
+    "conference",
+    "call",
+    "livemeeting",
+    "skype"
+  ],
+  "author": "Shane Weaver",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/drweaver/node-start-conference-call/issues"
+  },
+  "homepage": "https://github.com/drweaver/node-start-conference-call#readme",
+  "dependencies" : { 
+    "pubnub" : "^4.3.3"
+  , "jsonfile": "^2.4.0"
+  }
+}
