@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/drweaver/node-start-conference-call#readme",
   "dependencies" : { 
-    "pubnub" : "^4.3.3"
+    "pubnub" : "drweaver/pubnub-javascript"
   , "jsonfile": "^2.4.0"
   , "opn": "^4.0.2"
   }
