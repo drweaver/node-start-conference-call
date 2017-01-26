@@ -8,9 +8,11 @@ pubnub.start();
 
 eventbus.on('startconferencecall', function() {
     
-    calendar.getClosest(function(conferenceUrl) {
-        console.log("Attempting to open: " + conferenceUrl);
-        opn(conferenceUrl);        
+    calendar.getClosest().then(url => {
+        console.log("Attempting to open: " + url);
+        opn(url);        
+    }, err => {
+        console.error(err);
     });
-
+    
 });

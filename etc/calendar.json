@@ -1,3 +1,9 @@
 { 
-    "url": "<some conference call url>"
+    "url": "<some conference call url>",
+    "exe": "bin/GetActiveOutlookMeetings.exe 15",
+    "urlRegexp": [
+        { "name": "livemeeting attendee",  "regexp": "livemeeting\\.com.*role=attend" },
+        { "name": "livemeeting presenter", "regexp": "livemeeting\\.com.*role=present" },
+        { "name": "skype4business", "regexp": "meet\\..*\\.com" }
+        ]
 }
