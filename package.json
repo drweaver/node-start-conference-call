@@ -30,5 +30,6 @@
     "pubnub" : "drweaver/pubnub-javascript"
   , "jsonfile": "^2.4.0"
   , "opn": "^4.0.2"
+  , "restify": "^4.3.0"
   }
 }
