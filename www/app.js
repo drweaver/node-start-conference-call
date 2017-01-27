@@ -85,7 +85,7 @@ app.controller('MainController', function($scope, $http, $timeout, $window, subs
         $scope.autoStartCountdown = autoStartCountdownStart;
         $scope.autoStartChoice = -1;
         $scope.autoStartFrameUrl = "";
-      $http.get('/activemeetings').success(function(data) {
+      $http.get('/activemeetings?_='+new Date().getTime()).success(function(data) {
           $scope.meetings = data;
           console.log("Received meeting data: ");
           console.log(data);
