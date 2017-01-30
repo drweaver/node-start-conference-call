@@ -33,19 +33,19 @@
         <button class="btn btn-default" type="submit" ng-click="loadMeetings()" ng-disabled="loading">Load Now <i ng-style="loadingFailed?'color:red':''" ng-class="{'fa-spin': loading}" class="fa fa-refresh"></i></button>
         <button class="btn btn-default" type="submit" ng-click="meetings = []" ng-disabled="loading">Clear</button>
         <br/><br/>
-        <div class="container">
+        <div class="container" ng-cloak>
             <div ng-if="!meetings.length">No meetings found or loaded yet</div>
         <table class="table table-striped" ng-if="meetings.length">
             <tr><th>Meeting Title</th><th>Start Time</th><th>URLs</th><th>Action</th></tr>
-            <tr ng-repeat="meeting in meetings"><td ng-cloak>{{meeting.title}}</td><td ng-cloak>{{meeting.startTime|date:'medium'}}</td>
+            <tr ng-repeat="meeting in meetings"><td>{{meeting.title}}</td><td>{{meeting.startTime|date:'medium'}}</td>
             <td>
                 <ol>
-                    <li ng-repeat="url in meeting.urls"><a target="_blank" ng-href="{{url.url}}" ng-cloak>{{url.priority == -1 ? url.url : url.patternName | limitTo:30}}</a></li>
+                    <li ng-repeat="url in meeting.urls"><a target="_blank" ng-href="{{url.url}}">{{url.priority == -1 ? url.url : url.patternName | limitTo:30}}</a></li>
                 </ol>
             </td>
             <td>
                 <a ng-if="meeting.urls.length" class="btn btn-default" ng-href="{{meeting.urls[0].url}}" role="button">Launch</a>
-                <button ng-if="$index == autoStartChoice" class="btn btn-default" type="submit" ng-click="cancelAutoStartAction()" ng-cloak>Autostarting in {{autoStartCountdown}} . . . (click to cancel)</button>
+                <button ng-if="$index == autoStartChoice" class="btn btn-default" type="submit" ng-click="cancelAutoStartAction()">Autostarting in {{autoStartCountdown}} . . . (click to cancel)</button>
             </td>
             </tr>
         </table>
