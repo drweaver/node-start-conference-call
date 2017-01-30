@@ -2,7 +2,7 @@
 
 var app = angular.module('StartConferenceCallApp');
 
-app.controller('MainController', function($scope, $http, $timeout, $window, subscribeKey, publishKey) {
+app.controller('MainController', function($scope, $http, $timeout, $window, subscribeKey, publishKey, uuid) {
 
     var autoStartCountdownStart = 5;
     
@@ -12,11 +12,14 @@ app.controller('MainController', function($scope, $http, $timeout, $window, subs
     $scope.autoStartCountdown = autoStartCountdownStart;
     $scope.autoStartChoice = -1;
     $scope.autoStartFrameUrl = "";
+    $scope.loading = false;
+    $scope.loadingFailed = false;
     
 
     var pubnub = new PubNub({
         subscribeKey : subscribeKey,
-        publishKey: publishKey
+        publishKey: publishKey,
+        uuid: uuid
     });
        
     pubnub.addListener({
@@ -81,14 +84,25 @@ app.controller('MainController', function($scope, $http, $timeout, $window, subs
         }
     };
     
+    $scope.autoStartClicked = function() {
+      if( $scope.autoStart == false ) {
+          $scope.autoStartChoice = -1;
+      }  
+    };
+    
     $scope.loadMeetings = function() {
         $scope.autoStartCountdown = autoStartCountdownStart;
         $scope.autoStartChoice = -1;
         $scope.autoStartFrameUrl = "";
-      $http.get('/activemeetings?_='+new Date().getTime()).success(function(data) {
-          $scope.meetings = data;
+        $scope.loading = true;
+        $scope.loadingFailed = false;
+        $scope.meetings = [];
+        $http.get('/activemeetings?_='+new Date().getTime()).then(function(response) {
+          $scope.loading = false;
+          $scope.loadingFailed = false;
+          $scope.meetings = response.data;
           console.log("Received meeting data: ");
-          console.log(data);
+          console.log(response.data);
           console.log($scope.autoStart);
           
           if( $scope.autoStart && $scope.meetings.length != 0 
@@ -97,7 +111,10 @@ app.controller('MainController', function($scope, $http, $timeout, $window, subs
             $scope.autoStartChoice = 0;
             autoStartAction();
           }
-      });
+        }, function() {
+            $scope.loading = false;
+            $scope.loadingFailed = true;
+        });
     };
 
 });

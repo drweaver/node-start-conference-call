@@ -10,6 +10,7 @@
     <!--
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body ng-controller="MainController">
     <div class="container">
@@ -19,15 +20,16 @@
     <div class="jumbotron">
     <div>Alexa connection status: {{pubnubStatus}}</div>
     <div>(Please keep this window open)</div>
+        Waiting for messages...
     </div>
     
     <div>
-        <input ng-model="autoStart" type="checkbox"> Auto Start<br/>
-        Waiting for messages...
-        <button class="btn btn-default" type="submit" ng-click="loadMeetings()">Load Now</button>
-        <button class="btn btn-default" type="submit" ng-click="meetings = []">Clear</button>
+        <input ng-model="autoStart" type="checkbox" ng-click="autoStartClicked()"> Auto Start<br/>
+        <button class="btn btn-default" type="submit" ng-click="loadMeetings()" ng-disabled="loading">Load Now <i ng-style="loadingFailed?'color:red':''" ng-class="{'fa-spin': loading}" class="fa fa-refresh"></i></button>
+        <button class="btn btn-default" type="submit" ng-click="meetings = []" ng-disabled="loading">Clear</button>
         <br/><br/>
         <div class="container">
+            <div ng-if="!meetings.length">No meetings found or loaded yet</div>
         <table class="table table-striped" ng-if="meetings.length">
             <tr><th>Meeting Title</th><th>Start Time</th><th>URLs</th><th>Action</th></tr>
             <tr ng-repeat="meeting in meetings"><td>{{meeting.title}}</td><td>{{meeting.startTime|date:'medium'}}</td>
