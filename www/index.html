@@ -35,20 +35,25 @@
         <br/><br/>
         <div class="container" ng-cloak>
             <div ng-if="!meetings.length">No meetings found or loaded yet</div>
-        <table class="table table-striped" ng-if="meetings.length">
-            <tr><th>Meeting Title</th><th>Start Time</th><th>URLs</th><th>Action</th></tr>
-            <tr ng-repeat="meeting in meetings"><td>{{meeting.title}}</td><td>{{meeting.startTime|date:'medium'}}</td>
-            <td>
-                <ol>
-                    <li ng-repeat="url in meeting.urls"><a target="_blank" ng-href="{{url.url}}">{{url.priority == -1 ? url.url : url.patternName | limitTo:30}}</a></li>
-                </ol>
-            </td>
-            <td>
-                <a ng-if="meeting.urls.length" class="btn btn-default" ng-href="{{meeting.urls[0].url}}" role="button">Launch</a>
-                <button ng-if="$index == autoStartChoice" class="btn btn-default" type="submit" ng-click="cancelAutoStartAction()">Autostarting in {{autoStartCountdown}} . . . (click to cancel)</button>
-            </td>
-            </tr>
-        </table>
+            <div ng-if="meetings.length">
+                A list of meetings will be shown below, prioritised by start time, when Load Now or requested by Alexa.
+                Upon loading meetings, if Auto Start is enabled, the first will be launched automatically.
+                If no URLs are found or the second meeting has the same start time, Auto Start will not fire.
+            <table class="table table-striped" >
+                <tr><th>Meeting Title</th><th>Start Time</th><th>URLs</th><th>Action</th></tr>
+                <tr ng-repeat="meeting in meetings"><td>{{meeting.title}}</td><td>{{meeting.startTime|date:'medium'}}</td>
+                <td>
+                    <ol>
+                        <li ng-repeat="url in meeting.urls"><a target="_blank" ng-href="{{url.url}}">{{url.priority == -1 ? url.url : url.patternName | limitTo:30}}</a></li>
+                    </ol>
+                </td>
+                <td>
+                    <a ng-if="meeting.urls.length" class="btn btn-default" ng-href="{{meeting.urls[0].url}}" role="button">Launch</a>
+                    <button ng-if="$index == autoStartChoice" class="btn btn-default" type="submit" ng-click="cancelAutoStartAction()">Autostarting in {{autoStartCountdown}} . . . (click to cancel)</button>
+                </td>
+                </tr>
+            </table>
+            </div>
         </div>
 
     </div>
