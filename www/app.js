@@ -49,7 +49,8 @@ app.controller('MainController', function($scope, $http, $timeout, $window, subs
         },
         message: function(message) {
             console.log("New Message!!", message);
-            $scope.loadMeetings();
+            if( message == 'startconferencecall')
+              $scope.loadMeetings();
         }
 
     });    
