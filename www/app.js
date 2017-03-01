@@ -2,9 +2,10 @@
 
 var app = angular.module('StartConferenceCallApp');
 
-app.controller('MainController', function($scope, $http, $timeout, $window, subscribeKey, publishKey, uuid) {
+app.controller('MainController', function($scope, $http, $timeout, $interval, $window, subscribeKey, publishKey, uuid) {
 
     var autoStartCountdownStart = 5;
+	var lastMessageTime = 0;
     
     $scope.pubnubStatus = 'connecting...';
     $scope.meetings = [];
@@ -14,6 +15,21 @@ app.controller('MainController', function($scope, $http, $timeout, $window, subs
     $scope.autoStartFrameUrl = "";
     $scope.loading = false;
     $scope.loadingFailed = false;
+	$scope.serviceStatus = 'connecting...';
+	
+	var checkService = function() {
+		$http.get('/status?_='+new Date().getTime()).then(
+			function success(res) {
+				$scope.serviceStatus = 'connected';
+			},
+			function error(res) {
+				$scope.serviceStatus = 'unable to connect, try restarting'
+			}
+		);
+	};
+	
+	checkService();
+	$interval( checkService, 10000 ); 
     
 
     var pubnub = new PubNub({
@@ -49,8 +65,10 @@ app.controller('MainController', function($scope, $http, $timeout, $window, subs
         },
         message: function(message) {
             console.log("New Message!!", message);
-            if( message == 'startconferencecall')
-              $scope.loadMeetings();
+            if( message.message == 'startconferencecall' && message.timetoken > lastMessageTime) {
+				lastMessageTime = message.timetoken;
+				$scope.loadMeetings();
+			}
         }
 
     });    

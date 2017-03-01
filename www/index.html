@@ -23,8 +23,9 @@
         
     <h1>Start My Conference Call</h1>
     <div class="jumbotron">
-    <div>Alexa connection status: {{pubnubStatus}}</div>
-    <div>(Please keep this window open)</div>
+    <div>Alexa status: <div class="label" ng-class="pubnubStatus.indexOf('connected')!=-1?'label-success':'label-danger'">{{pubnubStatus}}</div></div>
+	<div>Calendar service status: <div class="label" ng-class="serviceStatus.indexOf('connected')!=-1?'label-success':'label-danger'">{{serviceStatus}}</div></div>
+    <div>(Please keep this window open or minimised)</div>
         Waiting for messages...
     </div>
     
@@ -36,7 +37,7 @@
         <div class="container" ng-cloak>
             <div ng-if="!meetings.length">No meetings found or loaded yet</div>
             <div ng-if="meetings.length">
-                A list of meetings will be shown below, prioritised by start time, when Load Now or requested by Alexa.
+                A list of meetings will be shown below, prioritised by start time.
                 Upon loading meetings, if Auto Start is enabled, the first will be launched automatically.
                 If no URLs are found or the second meeting has the same start time, Auto Start will not fire.
             <table class="table table-striped" >
